@@ -27,16 +27,25 @@ usermod -aG sudo quectel
 
 passwd quectel
 su quectel
+rm -f "$0"
 EOF
 
 chmod +x $container_file/Container_Init.sh
 
-if [ $sel -eq "--mnt" ]; then
+if [ "$sel" = "--mnt" ]; then
 	docker run -it \
 	  --privileged \
 	  --name $container_name \
 	  -v $container_file:/home/quectel/WorkSpace \
 	  -v /opt:/opt \
+	  -v $HOME/.ssh:/home/quectel/.ssh:ro \
+	  -w /home/quectel/WorkSpace \
+	  $image_name \
+	  /bin/bash
+elif [ "$sel" = "--ssh" ]; then
+	docker run -it \
+	  --name $container_name \
+	  -v $container_file:/home/quectel/WorkSpace \
 	  -v $HOME/.ssh:/home/quectel/.ssh:ro \
 	  -w /home/quectel/WorkSpace \
 	  $image_name \
