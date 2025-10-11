@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -ne 3 ];
+if [ $# -lt 3 ];
 then
     echo "please input [container_name][container_file][image_name]"
     exit 1
