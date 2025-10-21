@@ -36,13 +36,17 @@ RUN apt-get update && \
 
 RUN echo "alias ls='ls --color=auto'" >> /etc/bash.bashrc
 
-RUN useradd -m -s /bin/bash \$USER && \
+RUN if ! id -u \$USER >/dev/null 2>&1; then \
+      useradd -m -s /bin/bash \$USER; \
+    fi && \
     echo "\$USER:$user_password" | chpasswd && \
     usermod -aG sudo \$USER
 EOF
 
 new_image_name="${image_name}-with-user"
 docker build -t $new_image_name .
+
+rm -f Dockerfile
 
 if [ "$sel" = "--mnt" ]; then
 	docker run -it \
@@ -55,8 +59,10 @@ if [ "$sel" = "--mnt" ]; then
 	  --user quectel \
 	  $new_image_name \
 	  /bin/bash
+
 elif [ "$sel" = "--ssh" ]; then
 	docker run -it \
+	  --privileged \
 	  --name $container_name \
 	  -v $container_file:/home/quectel/WorkSpace \
 	  -v $HOME/.ssh:/home/quectel/.ssh:ro \
@@ -66,6 +72,7 @@ elif [ "$sel" = "--ssh" ]; then
 	  /bin/bash
 else
 	docker run -it \
+	  --privileged \
 	  --name $container_name \
 	  -v $container_file:/home/quectel/WorkSpace \
 	  -w /home/quectel/WorkSpace \
