@@ -54,7 +54,7 @@ if [ "$sel" = "--mnt" ]; then
 	  --name $container_name \
 	  -v $container_file:/home/quectel/WorkSpace \
 	  -v /opt:/opt \
-	  -v $HOME/.ssh:/home/quectel/.ssh:ro \
+	  -v $HOME/.ssh:/home/quectel/.ssh \
 	  -w /home/quectel/WorkSpace \
 	  --user quectel \
 	  $new_image_name \
@@ -65,7 +65,7 @@ elif [ "$sel" = "--ssh" ]; then
 	  --privileged \
 	  --name $container_name \
 	  -v $container_file:/home/quectel/WorkSpace \
-	  -v $HOME/.ssh:/home/quectel/.ssh:ro \
+	  -v $HOME/.ssh:/home/quectel/.ssh \
 	  -w /home/quectel/WorkSpace \
 	  --user quectel \
 	  $new_image_name \
