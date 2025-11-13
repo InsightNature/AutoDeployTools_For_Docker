@@ -55,6 +55,7 @@ if [ "$sel" = "--mnt" ]; then
 	  -v $container_file:/home/quectel/WorkSpace \
 	  -v /opt:/opt \
 	  -v $HOME/.ssh:/home/quectel/.ssh \
+	  -v $HOME/.gitconfig:/home/quectel/.gitconfig \
 	  -w /home/quectel/WorkSpace \
 	  --user quectel \
 	  $new_image_name \
@@ -66,6 +67,7 @@ elif [ "$sel" = "--ssh" ]; then
 	  --name $container_name \
 	  -v $container_file:/home/quectel/WorkSpace \
 	  -v $HOME/.ssh:/home/quectel/.ssh \
+	  -v $HOME/.gitconfig:/home/quectel/.gitconfig \
 	  -w /home/quectel/WorkSpace \
 	  --user quectel \
 	  $new_image_name \
